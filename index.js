@@ -7,7 +7,7 @@ import {handleValidationErrors, checkAuth} from "./utils/index.js";
 
 
 mongoose
-    .connect('mongodb+srv://admin:wwwwww@cluster0.gbp6kn3.mongodb.net/blog?retryWrites=true&w=majority')
+    .connect(process.env.MONGODB_URI)
     .then(() => console.log('OK'))
     .catch((err) => console.log('Error', err))
 const app = express()
@@ -36,7 +36,7 @@ app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, Post
 app.delete('/posts/:id', checkAuth, PostController.remove)
 app.patch('/posts/:id', checkAuth, handleValidationErrors, PostController.update)
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
     if (err) {
         return console.log(err)
     }
